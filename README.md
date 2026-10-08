@@ -38,7 +38,7 @@ taskDashboard (LWC)
 ```powershell
 sf project deploy start -o seuOrg
 ```
-Depois, adicione o componente `taskDashboard` em uma App Page ou Home Page pelo App Builder.
+Depois, adicione o componente `taskDashboard` em uma App Page ou Home Page pelo App Builder (o projeto já inclui `Task_Dashboard_Preview`, uma App Page pronta para visualizar o componente em Setup → Lightning App Builder → Edit).
 
 ## Decisões técnicas
 - Uso do objeto padrão `Task` para não depender de schema customizado.
