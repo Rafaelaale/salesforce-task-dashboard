@@ -64,4 +64,20 @@ private class TaskDashboardControllerTest {
         List<Task> resultado = TaskDashboardController.getTasks('Todos', 'Todos', 'Todos');
         System.assertEquals(4, resultado.size());
     }
+
+    @isTest
+    static void testBulkRespeitaLimite() {
+        List<Task> tarefas = new List<Task>();
+        for (Integer i = 0; i < 250; i++) {
+            tarefas.add(new Task(Subject = 'Tarefa ' + i, Status = 'Not Started', Priority = 'Normal', ActivityDate = Date.today()));
+        }
+
+        Test.setMock(HttpCalloutMock.class, new MockCalloutGenerico());
+        Test.startTest();
+        insert tarefas;
+        Test.stopTest();
+
+        List<Task> resultado = TaskDashboardController.getTasks('Todos', 'Todos', 'Todos');
+        System.assert(resultado.size() <= 200, 'A consulta deve respeitar o LIMIT mesmo com mais de 200 tarefas');
+    }
 }

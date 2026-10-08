@@ -24,7 +24,11 @@ public with sharing class TaskDashboardController {
             }
             query += ' ORDER BY ActivityDate ASC NULLS LAST LIMIT 200';
 
-            return Database.query(query);
+            List<Task> tarefas = Database.query(query);
+
+            // remove campos que o usuário não tem permissão de ler, em vez de vazar o dado
+            SObjectAccessDecision decisao = Security.stripInaccessible(AccessType.READABLE, tarefas);
+            return (List<Task>) decisao.getRecords();
         } catch (Exception e) {
             throw new AuraHandledException('Erro ao buscar tarefas: ' + e.getMessage());
         }
